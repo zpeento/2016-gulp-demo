@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var less = require('gulp-less');
 var mocha = require('gulp-mocha');
 var uglify = require('gulp-uglify');
+var concat = require('gulp-concat');
 // gulp.task('my task 1',function () {
 // 	console.log('task 1');
 // })
@@ -40,6 +41,12 @@ gulp.task('jsmin',function () {
 	.pipe(gulp.dest('./public/javascript'))
 })
 
-gulp.task('default',['less','mocha test','jsmin'],function () {
+gulp.task('concat',function() {
+	return gulp.src('./public/javascript/*.js')
+	.pipe(concat('all.min.js'))//合并后的文件名
+	.pipe(gulp.dest('./public/javascript'))
+})
+
+gulp.task('default',['less','mocha test','jsmin','concat'],function () {
 	console.log('success')
 })
