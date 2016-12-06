@@ -1,0 +1,22 @@
+{
+  "name": "gulp_demo",
+  "version": "1.0.0",
+  "description": "learn gulp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zpeento/gulp_demo.git"
+  },
+  "author": "zpeento",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zpeento/gulp_demo/issues"
+  },
+  "homepage": "https://github.com/zpeento/gulp_demo#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
