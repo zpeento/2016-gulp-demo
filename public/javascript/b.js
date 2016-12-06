@@ -1,0 +1,1 @@
+function minus(n,u){return n-u}

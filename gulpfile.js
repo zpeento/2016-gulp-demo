@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
 var mocha = require('gulp-mocha');
+var uglify = require('gulp-uglify');
 // gulp.task('my task 1',function () {
 // 	console.log('task 1');
 // })
@@ -26,6 +27,19 @@ gulp.task('mocha test',function () {
 	return gulp.src('./src/test/index.test.js')
 	.pipe(mocha())
 })
-gulp.task('default',['less','mocha test'],function () {
+
+gulp.task('jsmin',function () {
+	return gulp.src('./src/javascript/*.js')
+	.pipe(uglify({
+		// compress:默认true,是否完全压缩
+		// preserveComments:'all' ,注释保留
+		// mangle:是否压缩变量名，默认：true
+		// mangle:false,
+		mangle:{except:['require','exports','module','$']}
+	}))
+	.pipe(gulp.dest('./public/javascript'))
+})
+
+gulp.task('default',['less','mocha test','jsmin'],function () {
 	console.log('success')
 })
