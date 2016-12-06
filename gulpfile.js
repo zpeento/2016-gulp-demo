@@ -17,13 +17,13 @@ var mocha = require('gulp-mocha');
 // });
 
 gulp.task('less',function () {
-	return gulp.src('./public/stylesheets/less/*.less')
+	return gulp.src('./src/less/*.less')
 	.pipe(less())
-	.pipe(gulp.dest('./public/stylesheets/css'))
+	.pipe(gulp.dest('./public/stylesheets'))
 });
 
 gulp.task('mocha test',function () {
-	return gulp.src('./public/javascript/index.test.js')
+	return gulp.src('./src/test/index.test.js')
 	.pipe(mocha())
 })
 gulp.task('default',['less','mocha test'],function () {
