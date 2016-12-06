@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
+var mocha = require('gulp-mocha');
 // gulp.task('my task 1',function () {
 // 	console.log('task 1');
 // })
@@ -21,6 +22,10 @@ gulp.task('less',function () {
 	.pipe(gulp.dest('./public/stylesheets/css'))
 });
 
-gulp.task('default',['less'],function () {
+gulp.task('mocha test',function () {
+	return gulp.src('./public/javascript/index.test.js')
+	.pipe(mocha())
+})
+gulp.task('default',['less','mocha test'],function () {
 	console.log('success')
 })
