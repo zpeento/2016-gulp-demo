@@ -10,3 +10,5 @@
 4.使用gulp-uglify对js文件进行压缩
 
 5.使用gulp-concat对js文件进行合并
+
+6.使用gulp-clean-css对css文件进行压缩
