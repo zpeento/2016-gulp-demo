@@ -4,32 +4,25 @@ var less = require('gulp-less');
 //测试
 var mocha = require('gulp-mocha');
 //压缩js代码
-var uglify = require('gulp-uglify');
+var minjs = require('gulp-uglify');
 //拼接整合代码
 var concat = require('gulp-concat');
 //压缩css代码
 var mincss = require('gulp-clean-css');
-// gulp.task('my task 1',function () {
-// 	console.log('task 1');
-// })
-
-// gulp.task('my task 2',function () {
-// 	console.log('task 2');
-// })
+//压缩图像
+var minimage = require('gulp-imagemin');
 
 
-//运行gulp会执行默认任务
-//对任务顺序进行排序，默认的任务在最后执行
-// gulp.task('default',['my task 1','my task 2'],function () {
-// 	console.log('hello gulp!')
-// });
 
+//将less文件编译成css文件
 // gulp.task('less',function () {
 // 	return gulp.src('./src/less/*.less')
 // 	.pipe(less())
 // 	.pipe(gulp.dest('./public/stylesheets'))
 // });
 
+
+//先使用less()将less文件编译成css文件，之后再对css文件进行压缩
 gulp.task('mincss',function () {
 	return gulp.src('./src/less/*.less')
 	.pipe(less())
@@ -37,14 +30,25 @@ gulp.task('mincss',function () {
 	.pipe(gulp.dest('./public/stylesheets'))
 })
 
+//对图像文件进行压缩
+gulp.task('minimage', function(){
+    return gulp.src('./src/images/*.jpg')
+        .pipe(minimage({
+        	optimizationLevel: 5
+        }))
+        .pipe(gulp.dest('./public/images'));
+});
+
+//使用mocha对文件进行测试
 gulp.task('mocha test',function () {
 	return gulp.src('./src/test/index.test.js')
 	.pipe(mocha())
 })
 
-gulp.task('jsmin',function () {
+//对js文件进行压缩
+gulp.task('minjs',function () {
 	return gulp.src('./src/javascript/*.js')
-	.pipe(uglify({
+	.pipe(minjs({
 		// compress:默认true,是否完全压缩
 		// preserveComments:'all' ,注释保留
 		mangle:false //是否压缩变量名，默认：true
@@ -54,12 +58,13 @@ gulp.task('jsmin',function () {
 	.pipe(gulp.dest('./public/javascript'))
 })
 
+//对js文件进行拼接
 gulp.task('concat',function() {
 	return gulp.src('./public/javascript/*.js')
 	.pipe(concat('all.min.js'))//合并后的文件名
 	.pipe(gulp.dest('./public/javascript'))
 })
 
-gulp.task('default',['mincss','mocha test','jsmin','concat'],function () {
+gulp.task('default',['mincss','minimage','mocha test','minjs','concat'],function () {
 	console.log('success')
 })
