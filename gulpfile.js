@@ -73,7 +73,7 @@ gulp.task('sprite',function() {
 })
 
 //对图像文件进行压缩
-gulp.task('minimage', function(){
+gulp.task('minimage',['sprite'], function(){
     return gulp.src('./src/images/*.*')
 		//gulp缓存，使gulp只压缩没有压缩过的图片
         .pipe(cache(minimage({
