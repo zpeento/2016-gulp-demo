@@ -13,7 +13,10 @@ var mincss = require('gulp-clean-css');
 var minimage = require('gulp-imagemin');
 //雪碧图
 var sprite = require('gulp.spritesmith');
-
+//png深度压缩工具
+var pngquant = require('imagemin-pngquant');
+//gulp缓存，使gulp只压缩没有压缩过的图片
+var cache = require('gulp-cache');
 
 //将less文件编译成css文件
 // gulp.task('less',function () {
@@ -60,7 +63,7 @@ gulp.task('concat',function() {
 //使用gulp.spritesmith将图片制作成雪碧图
 gulp.task('sprite',function() {
 	var spriteData = gulp.src('./src/images/*.png').pipe(sprite({
-		imgName:'../../public/images/sprite.png',
+		imgName:'../../src/images/sprite.png',
 		cssName:'../../src/less/sprite.less',
 		cssFormat:'less',
 		padding: 2
@@ -72,9 +75,15 @@ gulp.task('sprite',function() {
 //对图像文件进行压缩
 gulp.task('minimage', function(){
     return gulp.src('./src/images/*.*')
-        .pipe(minimage({
-        	optimizationLevel: 5
-        }))
+		//gulp缓存，使gulp只压缩没有压缩过的图片
+        .pipe(cache(minimage({
+        	optimizationLevel: 5, //取值范围0-7.默认3
+			progressive:true,     //是否无损压缩jpg,默认false
+			interlaced:true,      //是否隔行扫描gif
+			multipass:true,        //是否多次优化svg直到完全优化
+			svgoPlugins: [{removeViewBox: false}],//不要移除svg的viewbox属性
+            use: [pngquant()] //使用pngquant深度压缩png图片的imagemin插件
+        })))
         .pipe(gulp.dest('./public/images/'));
 });
 
