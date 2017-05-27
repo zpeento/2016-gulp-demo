@@ -69,8 +69,11 @@ gulp.task('concat',function() {
 //使用gulp.spritesmith将图片制作成雪碧图
 gulp.task('sprite',function() {
 	var spriteData = gulp.src('./src/images/*.png').pipe(sprite({
-		imgName:'sprite.png',
-		cssName:'sprite.scss'
+		imgName:'../../public/images/sprite.png',
+		cssName:'../../src/less/sprite.less',
+		cssFormat:'less',
+		padding: 2
+		
 	}))
 	return spriteData.pipe(gulp.dest('./public/images/'))
 })
