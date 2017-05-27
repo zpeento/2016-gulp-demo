@@ -31,15 +31,6 @@ gulp.task('mincss',function () {
 	.pipe(gulp.dest('./public/stylesheets'))
 })
 
-//对图像文件进行压缩
-// gulp.task('minimage', function(){
-//     return gulp.src('./src/images/*.jpg')
-//         .pipe(minimage({
-//         	optimizationLevel: 5
-//         }))
-//         .pipe(gulp.dest('./public/images'));
-// });
-
 //使用mocha对文件进行测试
 gulp.task('mocha test',function () {
 	return gulp.src('./src/test/index.test.js')
@@ -78,6 +69,15 @@ gulp.task('sprite',function() {
 	return spriteData.pipe(gulp.dest('./public/images/'))
 })
 
-gulp.task('default',['mincss','mocha test','minjs','concat','sprite'],function () {
+//对图像文件进行压缩
+gulp.task('minimage', function(){
+    return gulp.src('./src/images/*.*')
+        .pipe(minimage({
+        	optimizationLevel: 5
+        }))
+        .pipe(gulp.dest('./public/images/'));
+});
+
+gulp.task('default',['mocha test','minjs','concat','sprite','minimage','mincss'],function () {
 	console.log('success')
 })
