@@ -11,7 +11,8 @@ var concat = require('gulp-concat');
 var mincss = require('gulp-clean-css');
 //压缩图像
 var minimage = require('gulp-imagemin');
-
+//雪碧图
+var sprite = require('gulp.spritesmith');
 
 
 //将less文件编译成css文件
@@ -31,13 +32,13 @@ gulp.task('mincss',function () {
 })
 
 //对图像文件进行压缩
-gulp.task('minimage', function(){
-    return gulp.src('./src/images/*.jpg')
-        .pipe(minimage({
-        	optimizationLevel: 5
-        }))
-        .pipe(gulp.dest('./public/images'));
-});
+// gulp.task('minimage', function(){
+//     return gulp.src('./src/images/*.jpg')
+//         .pipe(minimage({
+//         	optimizationLevel: 5
+//         }))
+//         .pipe(gulp.dest('./public/images'));
+// });
 
 //使用mocha对文件进行测试
 gulp.task('mocha test',function () {
@@ -65,6 +66,15 @@ gulp.task('concat',function() {
 	.pipe(gulp.dest('./public/javascript'))
 })
 
-gulp.task('default',['mincss','minimage','mocha test','minjs','concat'],function () {
+//使用gulp.spritesmith将图片制作成雪碧图
+gulp.task('sprite',function() {
+	var spriteData = gulp.src('./src/images/*.png').pipe(sprite({
+		imgName:'sprite.png',
+		cssName:'sprite.scss'
+	}))
+	return spriteData.pipe(gulp.dest('./public/images/'))
+})
+
+gulp.task('default',['mincss','mocha test','minjs','concat','sprite'],function () {
 	console.log('success')
 })

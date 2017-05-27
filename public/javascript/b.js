@@ -1,1 +1,1 @@
-function minus(n,u){return n-u}
+function minus(a,b){return a-b}

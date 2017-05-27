@@ -1,1 +1,1 @@
-function sum(n,u){return n+u}
+function sum(a,b){return a+b}
