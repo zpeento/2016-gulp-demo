@@ -31,9 +31,21 @@ var clean_path = require('./path').clean;
 // });
 
 //清除build文件
-gulp.task('clean',function () {
-	console.log(clean_path.clean_css)
-	return gulp.src([clean_path.clean_css],[clean_path.clean_js],[clean_path.clean_sprite])
+gulp.task('clean-sprite',function () {
+	console.log(clean_path.clean_sprite)
+	return gulp.src([clean_path.clean_sprite])
+		.pipe(clean({force: true}))
+		.pipe(clean())
+})
+gulp.task('clean-css',function () {
+	console.log(clean_path.clean_sprite)
+	return gulp.src([clean_path.clean_css])
+		.pipe(clean({force: true}))
+		.pipe(clean())
+})
+gulp.task('clean-js',function () {
+	console.log(clean_path.clean_sprite)
+	return gulp.src([clean_path.clean_js])
 		.pipe(clean({force: true}))
 		.pipe(clean())
 })
@@ -102,14 +114,15 @@ gulp.task('minimage',['sprite'], function(){
 //实现gulp任务按顺序执行
 gulp.task('build',function(){
 	sequence(
-		'clean'
-		// ,
-		// 'mocha test',
-		// 'minjs',
-		// 'concat',
-		// 'sprite',
-		// 'minimage',
-		// 'mincss'
+		'clean-css',
+		'clean-sprite',
+		'clean-js',
+		'mocha test',
+		'minjs',
+		'concat',
+		'sprite',
+		'minimage',
+		'mincss'
 	)
 })
 
