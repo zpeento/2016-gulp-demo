@@ -29,6 +29,7 @@
     "gulp-uglify": "^2.0.0",
     "gulp.spritesmith": "^6.5.0",
     "imagemin-pngquant": "^5.0.0",
+    "run-sequence": "^1.2.2",
     "should": "^11.1.1"
   }
 }

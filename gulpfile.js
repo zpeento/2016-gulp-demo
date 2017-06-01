@@ -19,6 +19,8 @@ var pngquant = require('imagemin-pngquant');
 var cache = require('gulp-cache');
 //清除build
 var clean = require('gulp-clean');
+//使gulp按顺序执行任务
+var sequence = require('run-sequence');
 
 var clean_path = require('./path').clean;
 //将less文件编译成css文件
@@ -30,7 +32,9 @@ var clean_path = require('./path').clean;
 
 //清除build文件
 gulp.task('clean',function () {
+	console.log(clean_path.clean_css)
 	return gulp.src([clean_path.clean_css],[clean_path.clean_js],[clean_path.clean_sprite])
+		.pipe(clean({force: true}))
 		.pipe(clean())
 })
 
@@ -95,6 +99,20 @@ gulp.task('minimage',['sprite'], function(){
         .pipe(gulp.dest('./public/images/'));
 });
 
-gulp.task('default',['mocha test','minjs','concat','sprite','minimage','mincss'],function () {
+//实现gulp任务按顺序执行
+gulp.task('build',function(){
+	sequence(
+		'clean'
+		// ,
+		// 'mocha test',
+		// 'minjs',
+		// 'concat',
+		// 'sprite',
+		// 'minimage',
+		// 'mincss'
+	)
+})
+
+gulp.task('default',['build'],function () {
 	console.log('success')
 })

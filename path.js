@@ -1,5 +1,5 @@
-var src = './src'
-var dest = './public'
+var src = './src/'
+var dest = './public/'
 
 module.exports = {
 	clean:{
