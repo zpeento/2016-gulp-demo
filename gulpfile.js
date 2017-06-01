@@ -17,7 +17,10 @@ var sprite = require('gulp.spritesmith');
 var pngquant = require('imagemin-pngquant');
 //gulp缓存，使gulp只压缩没有压缩过的图片
 var cache = require('gulp-cache');
+//清除build
+var clean = require('gulp-clean');
 
+var clean_path = require('./path').clean;
 //将less文件编译成css文件
 // gulp.task('less',function () {
 // 	return gulp.src('./src/less/*.less')
@@ -25,6 +28,11 @@ var cache = require('gulp-cache');
 // 	.pipe(gulp.dest('./public/stylesheets'))
 // });
 
+//清除build文件
+gulp.task('clean',function () {
+	return gulp.src([clean_path.clean_css],[clean_path.clean_js],[clean_path.clean_sprite])
+		.pipe(clean())
+})
 
 //先使用less()将less文件编译成css文件，之后再对css文件进行压缩
 gulp.task('mincss',function () {
